@@ -1,11 +1,14 @@
 import PropTypes from "prop-types";
 
-import { connect } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import actions from "../../../redux/actions";
 
 import style from "./GetFilterContacts.module.css";
 
-function GetFilterContacts({ filterContacts, onChangeFilter }) {
+export default function GetFilterContacts() {
+  const filterContacts = useSelector((state) => state.phoneBook.filters);
+  const dispatch = useDispatch();
+
   return (
     <>
       <label className={style.Container}>
@@ -14,7 +17,9 @@ function GetFilterContacts({ filterContacts, onChangeFilter }) {
           type="text"
           name="name"
           value={filterContacts}
-          onChange={onChangeFilter}
+          onChange={(e) =>
+            dispatch(actions.filterContacts(e.currentTarget.value))
+          }
           pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
           title="Имя может состоять только из букв, апострофа, тире и пробелов. Например Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan и т. п."
           required
@@ -29,13 +34,13 @@ GetFilterContacts.propTypes = {
   filterContacts: PropTypes.string.isRequired,
 };
 
-const mapStateToProps = (state) => ({
-  filterContacts: state.phoneBook.filters,
-});
+// const mapStateToProps = (state) => ({
+//   filterContacts: state.phoneBook.filters,
+// });
 
-const mapDispatchToProps = (dispatch) => ({
-  onChangeFilter: (e) =>
-    dispatch(actions.filterContacts(e.currentTarget.value)),
-});
+// const mapDispatchToProps = (dispatch) => ({
+//   onChangeFilter: (e) =>
+//     dispatch(actions.filterContacts(e.currentTarget.value)),
+// });
 
-export default connect(mapStateToProps, mapDispatchToProps)(GetFilterContacts);
+// export default connect(mapStateToProps, mapDispatchToProps)(GetFilterContacts);
