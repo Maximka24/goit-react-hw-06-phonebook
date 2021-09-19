@@ -1,8 +1,10 @@
 import { useState } from "react";
+import { connect } from "react-redux";
+import actions from "../../redux/actions";
 import PropTypes from "prop-types";
 import s from "./Phonebook.module.css";
 
-export default function PhoneBook({ submitForm }) {
+function PhoneBook({ submitForm }) {
   const [name, setName] = useState("");
   const [number, setNumber] = useState("");
 
@@ -17,6 +19,7 @@ export default function PhoneBook({ submitForm }) {
       case "number":
         setNumber(value);
         break;
+
       default:
         return;
     }
@@ -25,7 +28,7 @@ export default function PhoneBook({ submitForm }) {
   const onSubmitForm = (e) => {
     e.preventDefault();
 
-    submitForm({ name, number });
+    submitForm(name, number);
     formReset();
   };
 
@@ -71,3 +74,9 @@ export default function PhoneBook({ submitForm }) {
 PhoneBook.propTypes = {
   submitForm: PropTypes.func.isRequired,
 };
+
+const mapDispatchToProps = (dispatch) => ({
+  submitForm: (name, number) => dispatch(actions.addContacts(name, number)),
+});
+
+export default connect(null, mapDispatchToProps)(PhoneBook);

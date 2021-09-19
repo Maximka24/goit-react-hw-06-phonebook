@@ -1,8 +1,11 @@
 import PropTypes from "prop-types";
 
+import { connect } from "react-redux";
+import actions from "../../../redux/actions";
+
 import style from "./GetFilterContacts.module.css";
 
-export default function GetFilterContacts({ filterContacts, onChangeFilter }) {
+function GetFilterContacts({ filterContacts, onChangeFilter }) {
   return (
     <>
       <label className={style.Container}>
@@ -25,3 +28,14 @@ GetFilterContacts.propTypes = {
   onChangeFilter: PropTypes.func.isRequired,
   filterContacts: PropTypes.string.isRequired,
 };
+
+const mapStateToProps = (state) => ({
+  filterContacts: state.phoneBook.filters,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  onChangeFilter: (e) =>
+    dispatch(actions.filterContacts(e.currentTarget.value)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(GetFilterContacts);
