@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import actions from "../../redux/actions";
-import PropTypes from "prop-types";
+
 import s from "./Phonebook.module.css";
 
 export default function PhoneBook() {
@@ -9,6 +9,13 @@ export default function PhoneBook() {
   const [number, setNumber] = useState("");
 
   const dispatch = useDispatch();
+
+  const filterListName = useSelector((state) => state.phoneBook.contacts);
+  const nameContact = filterListName.some((contact) => contact.name === name);
+  const filterListNumber = useSelector((state) => state.phoneBook.contacts);
+  const numberContact = filterListNumber.some(
+    (contact) => contact.number === number
+  );
 
   const handleChangeInput = (e) => {
     const { value } = e.currentTarget;
@@ -28,6 +35,13 @@ export default function PhoneBook() {
   };
 
   const onSubmitForm = (e) => {
+    if (nameContact && numberContact) {
+      e.preventDefault();
+      alert("Такой КОНТАКТ уже есть в списке контактов!");
+
+      return;
+    }
+
     e.preventDefault();
 
     dispatch(actions.addContacts(name, number));
@@ -72,7 +86,3 @@ export default function PhoneBook() {
     </form>
   );
 }
-
-PhoneBook.propTypes = {
-  submitForm: PropTypes.func.isRequired,
-};

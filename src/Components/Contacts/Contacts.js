@@ -1,5 +1,5 @@
 import React from "react";
-import PropTypes from "prop-types";
+
 import s from "./Contacts.module.css";
 
 import { useSelector } from "react-redux";
@@ -22,10 +22,6 @@ const Contacts = () => {
       )}
     </div>
   );
-};
-
-Contacts.propTypes = {
-  mainListContact: PropTypes.array.isRequired,
 };
 
 export default Contacts;

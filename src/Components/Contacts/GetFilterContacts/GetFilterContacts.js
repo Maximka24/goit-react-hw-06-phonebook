@@ -1,5 +1,3 @@
-import PropTypes from "prop-types";
-
 import { useDispatch, useSelector } from "react-redux";
 import actions from "../../../redux/actions";
 
@@ -28,19 +26,3 @@ export default function GetFilterContacts() {
     </>
   );
 }
-
-GetFilterContacts.propTypes = {
-  onChangeFilter: PropTypes.func.isRequired,
-  filterContacts: PropTypes.string.isRequired,
-};
-
-// const mapStateToProps = (state) => ({
-//   filterContacts: state.phoneBook.filters,
-// });
-
-// const mapDispatchToProps = (dispatch) => ({
-//   onChangeFilter: (e) =>
-//     dispatch(actions.filterContacts(e.currentTarget.value)),
-// });
-
-// export default connect(mapStateToProps, mapDispatchToProps)(GetFilterContacts);
